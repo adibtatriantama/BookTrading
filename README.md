@@ -11,6 +11,12 @@ Fullstack app for Free Code Camp Legacy Backend Certification
 3. I can update my settings to store my full name, city, and state
 4. I can propose a trade and wait for the other user to accept the trade
 
+## Use Case Diagram
+
+<p align="center">
+  <img src="use-case.png" alt="User Story"/>
+</p>
+
 ## Installation
 
 ```bash
