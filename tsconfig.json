@@ -16,6 +16,12 @@
     "noImplicitAny": false,
     "strictBindCallApply": false,
     "forceConsistentCasingInFileNames": false,
-    "noFallthroughCasesInSwitch": false
+    "noFallthroughCasesInSwitch": false,
+    "paths": {
+      "~app/*": ["src/module/app/*"],
+      "~shared/*": ["src/shared/*"],
+      "~account/*": ["src/module/account/*"],
+      "~book-trading/*": ["src/module/book-trading/*"]
+    }
   }
 }
