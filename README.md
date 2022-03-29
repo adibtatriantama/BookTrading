@@ -15,6 +15,7 @@ Fullstack app for Free Code Camp Legacy Backend Certification
 
 <p align="center">
   <img src="use-case.png" alt="User Story"/>
+  <img src="use-case.png" alt="Use Case Diagram"/>
 </p>
 
 ## Installation
