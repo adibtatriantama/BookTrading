@@ -1,0 +1,79 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["mongoDb"]
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id            String            @id @default(auto()) @map("_id") @db.ObjectId
+  name          String
+  email         String            @unique
+  password      String
+  address       Address?
+  booksToTrades BooksToTrade[]
+  TradeProposal TradingProposal[]
+  createdAt     DateTime          @default(now())
+  updatedAt     DateTime          @updatedAt
+}
+
+type Address {
+  street String?
+  city   String
+  state  String
+  zip    String?
+}
+
+model BooksToTrade {
+  id        String            @id @default(auto()) @map("_id") @db.ObjectId
+  traderId  String
+  trader    User              @relation(fields: [traderId], references: [id])
+  status    BookToTradeStatus @default(open)
+  books     Book[]
+  proposals TradingProposal[]
+  createdAt DateTime          @default(now())
+  updatedAt DateTime          @updatedAt
+}
+
+enum BookToTradeStatus {
+  open
+  closed
+  cancelled
+}
+
+model TradingProposal {
+  id             String                @id @default(auto()) @map("_id") @db.ObjectId
+  traderId       String
+  trader         User                  @relation(fields: [traderId], references: [id])
+  booksToTradeId String
+  booksToTrade   BooksToTrade          @relation(fields: [booksToTradeId], references: [id])
+  books          Book[]
+  status         TradingProposalStatus
+  createdAt      DateTime              @default(now())
+  updatedAt      DateTime              @updatedAt
+}
+
+enum TradingProposalStatus {
+  pending
+  accepted
+  rejected
+}
+
+type Book {
+  title       String
+  description String?
+  author      String?
+  condition   BookCondition
+}
+
+enum BookCondition {
+  good
+  bad
+  new
+}
