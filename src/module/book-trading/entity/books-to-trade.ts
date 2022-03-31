@@ -10,7 +10,7 @@ export type BooksToTradeProps = {
   trader?: Trader;
   proposals?: TradingProposal[];
   books: Book[];
-  status: BooksToTradeStatus;
+  status?: BooksToTradeStatus;
   createdAt?: Date;
   updatedAt?: Date;
 };
@@ -28,6 +28,7 @@ export class BooksToTrade {
     return new BooksToTrade(
       {
         ...props,
+        status: props.status ? props.status : 'open',
         proposals: props.proposals ? props.proposals : [],
         createdAt: props.createdAt ? props.createdAt : new Date(),
         updatedAt: props.updatedAt ? props.updatedAt : new Date(),
@@ -60,7 +61,10 @@ export class BooksToTrade {
   }
 
   get status(): BooksToTradeStatus {
-    return this._props.status;
+    if (this._props.status) {
+      return this._props.status;
+    }
+    throw new Error('BooksToTrade.status is not set');
   }
 
   get createdAt(): Date {
