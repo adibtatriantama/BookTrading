@@ -53,4 +53,9 @@ export class Trader {
     }
     throw new Error('Trader.updatedAt is not set');
   }
+
+  setAddress(address: Address) {
+    this._props.address = address;
+    this._props.updatedAt = new Date();
+  }
 }
