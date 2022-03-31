@@ -11,7 +11,7 @@ export type TradingProposalProps = {
   booksToTradeId: string;
   booksToTrade?: BooksToTrade;
   books: Book[];
-  status: TradingProposalStatus;
+  status?: TradingProposalStatus;
   createdAt?: Date;
   updatedAt?: Date;
 };
@@ -29,6 +29,7 @@ export class TradingProposal {
     return new TradingProposal(
       {
         ...props,
+        status: props.status ? props.status : 'pending',
         createdAt: props.createdAt ? props.createdAt : new Date(),
         updatedAt: props.updatedAt ? props.updatedAt : new Date(),
       },
@@ -61,7 +62,10 @@ export class TradingProposal {
   }
 
   get status(): TradingProposalStatus {
-    return this._props.status;
+    if (this._props.status) {
+      return this._props.status;
+    }
+    throw new Error('TradingProposal.status is not set');
   }
 
   get createdAt(): Date {
