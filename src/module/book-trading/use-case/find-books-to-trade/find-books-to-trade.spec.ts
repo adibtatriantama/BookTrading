@@ -10,7 +10,7 @@ import { Address } from '~book-trading/value-object/address';
 import { Book } from '~book-trading/value-object/book';
 import { UnexpectedError } from '~shared/core/app.error';
 import { MockType } from '~shared/test/mock-type';
-import { FindBooksAvailableToTrade } from './find-books-available-to-trade';
+import { FindBooksToTrade } from './find-books-to-trade';
 
 const bookToTradeDummy = BooksToTrade.create(
   {
@@ -39,26 +39,24 @@ const bookToTradeDummy = BooksToTrade.create(
   'idd',
 );
 
-let useCase: FindBooksAvailableToTrade;
+let useCase: FindBooksToTrade;
 let repo: MockType<BookTradingRepo>;
 
 beforeEach(async () => {
   const module = await Test.createTestingModule({
     providers: [
-      FindBooksAvailableToTrade,
+      FindBooksToTrade,
       BooksTradingMapper,
       {
         provide: BOOK_TRADING_REPO,
         useValue: {
-          findBooksAvailableToTrade: jest
-            .fn()
-            .mockResolvedValue([bookToTradeDummy]),
+          findBooksToTrade: jest.fn().mockResolvedValue([bookToTradeDummy]),
         },
       },
     ],
   }).compile();
 
-  useCase = module.get(FindBooksAvailableToTrade);
+  useCase = module.get(FindBooksToTrade);
   repo = module.get(BOOK_TRADING_REPO);
 });
 
@@ -66,15 +64,15 @@ afterEach(() => {
   jest.resetAllMocks();
 });
 
-describe('FindBooksAvailableToTrade', () => {
+describe('FindBooksToTrade', () => {
   it('should be defined', () => {
     expect(useCase).toBeDefined();
   });
 
-  it('should call repo.findBooksAvailableToTrade', async () => {
-    await useCase.execute();
+  it('should call repo.findBooksToTrade', async () => {
+    await useCase.execute({});
 
-    expect(repo.findBooksAvailableToTrade).toHaveBeenCalled();
+    expect(repo.findBooksToTrade).toHaveBeenCalled();
   });
 
   describe('happy path', () => {
@@ -100,7 +98,7 @@ describe('FindBooksAvailableToTrade', () => {
     it('should return the dtos', async () => {
       const expectedDtos = [expectedDto];
 
-      const response = await useCase.execute();
+      const response = await useCase.execute({});
 
       expect(response.isRight()).toBe(true);
       expect(response.value).toEqual(expectedDtos);
@@ -109,9 +107,9 @@ describe('FindBooksAvailableToTrade', () => {
 
   describe('when unexpected error happen', () => {
     it('should return UnexpectedError', async () => {
-      repo.findBooksAvailableToTrade?.mockRejectedValue(new Error('err msg'));
+      repo.findBooksToTrade?.mockRejectedValue(new Error('err msg'));
 
-      const response = await useCase.execute();
+      const response = await useCase.execute({});
 
       expect(response.isLeft()).toEqual(true);
       expect(response.value.constructor).toEqual(UnexpectedError);
