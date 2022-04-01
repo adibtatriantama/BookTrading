@@ -14,13 +14,13 @@ Fullstack app for Free Code Camp Legacy Backend Certification
 ## Use Case Diagram
 
 <p align="center">
-  <img src="use-case.png" alt="Use Case Diagram"/>
+  <img width="350px" src="use-case.png" alt="Use Case Diagram"/>
 </p>
 
 ## Entity Relationship Diagram
 
 <p align="center">
-  <img src="use-case.png" alt="Entity Relationship Diagram"/>
+  <img width="350px" src="use-case.png" alt="Entity Relationship Diagram"/>
 </p>
 
 ## Installation
