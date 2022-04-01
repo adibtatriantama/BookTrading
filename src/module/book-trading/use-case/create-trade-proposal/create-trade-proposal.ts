@@ -1,7 +1,7 @@
 import { Inject } from '@nestjs/common';
 import { BOOK_TRADING_REPO } from '~book-trading/constant';
 import { BooksToTrade } from '~book-trading/entity/books-to-trade';
-import { TradingProposal } from '~book-trading/entity/trading-proposal';
+import { TradeProposal } from '~book-trading/entity/trade-proposal';
 import { BooksTradingMapper } from '~book-trading/mapper/book-trading.mapper';
 import { BookTradingRepo } from '~book-trading/repo/book-trading.repo';
 import { Book, BookProps } from '~book-trading/value-object/book';
@@ -13,18 +13,17 @@ import {
   BooksToTradeIsNoLongerAcceptingProposalError,
   BooksToTradeIsNotExistError,
   TraderIsNotExistError,
-} from './create-trading-proposal.error';
-import { CreateTradingProposalResponse } from './create-trading-proposal.response';
+} from './create-trade-proposal.error';
+import { CreateTradeProposalResponse } from './create-trade-proposal.response';
 
-export type CreateTradingProposalRequest = {
+export type CreateTradeProposalRequest = {
   traderId: string;
   booksToTradeId: string;
   books: BookProps[];
 };
 
-export class CreateTradingProposal
-  implements
-    UseCase<CreateTradingProposalRequest, CreateTradingProposalResponse>
+export class CreateTradeProposal
+  implements UseCase<CreateTradeProposalRequest, CreateTradeProposalResponse>
 {
   constructor(
     @Inject(BOOK_TRADING_REPO) private readonly repo: BookTradingRepo,
@@ -32,8 +31,8 @@ export class CreateTradingProposal
   ) {}
 
   async execute(
-    request: CreateTradingProposalRequest,
-  ): Promise<CreateTradingProposalResponse> {
+    request: CreateTradeProposalRequest,
+  ): Promise<CreateTradeProposalResponse> {
     if (request.books.length === 0) {
       return left(new BooksIsEmptyError());
     }
@@ -57,19 +56,19 @@ export class CreateTradingProposal
       return left(new BooksToTradeIsNoLongerAcceptingProposalError());
     }
 
-    const entity = TradingProposal.create({
+    const entity = TradeProposal.create({
       traderId: request.traderId,
       booksToTradeId: request.booksToTradeId,
       books: request.books.map((book) => Book.create(book)),
     });
 
-    let savedEntity: TradingProposal;
+    let savedEntity: TradeProposal;
     try {
-      savedEntity = await this.repo.saveTradingProposal(entity);
+      savedEntity = await this.repo.saveTradeProposal(entity);
     } catch (error) {
       return left(new UnexpectedError(error));
     }
 
-    return right(this.mapper.mapProposalToDto(savedEntity));
+    return right(this.mapper.mapTradeProposalToDto(savedEntity));
   }
 }

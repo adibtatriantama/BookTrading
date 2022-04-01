@@ -8,23 +8,23 @@ import { Book } from '~book-trading/value-object/book';
 import { UnexpectedError } from '~shared/core/app.error';
 import { MockType } from '~shared/test/mock-type';
 import {
-  CreateTradingProposal,
-  CreateTradingProposalRequest,
-} from './create-trading-proposal';
+  CreateTradeProposal,
+  CreateTradeProposalRequest,
+} from './create-trade-proposal';
 import {
   BooksIsEmptyError,
   BooksToTradeIsNoLongerAcceptingProposalError,
   BooksToTradeIsNotExistError,
   TraderIsNotExistError,
-} from './create-trading-proposal.error';
+} from './create-trade-proposal.error';
 
-let useCase: CreateTradingProposal;
+let useCase: CreateTradeProposal;
 let repo: MockType<BookTradingRepo>;
 
 beforeEach(async () => {
   const module = await Test.createTestingModule({
     providers: [
-      CreateTradingProposal,
+      CreateTradeProposal,
       BooksTradingMapper,
       {
         provide: BOOK_TRADING_REPO,
@@ -46,7 +46,7 @@ beforeEach(async () => {
               ],
             }),
           ),
-          saveTradingProposal: jest
+          saveTradeProposal: jest
             .fn()
             .mockImplementation(async (entity) => entity),
         },
@@ -54,12 +54,12 @@ beforeEach(async () => {
     ],
   }).compile();
 
-  useCase = module.get(CreateTradingProposal);
+  useCase = module.get(CreateTradeProposal);
   repo = module.get(BOOK_TRADING_REPO);
 });
 
-describe('CreateTradingProposal', () => {
-  const request: CreateTradingProposalRequest = {
+describe('CreateTradeProposal', () => {
+  const request: CreateTradeProposalRequest = {
     traderId: 'trader',
     booksToTradeId: 'booksToTradeId',
     books: [{ title: 'the book', author: 'the author', condition: 'good' }],
@@ -70,10 +70,10 @@ describe('CreateTradingProposal', () => {
   });
 
   describe('Happy Path', () => {
-    it('should call repo.saveTradingProposal', async () => {
+    it('should call repo.saveTradeProposal', async () => {
       await useCase.execute(request);
 
-      expect(repo.saveTradingProposal).toHaveBeenCalled();
+      expect(repo.saveTradeProposal).toHaveBeenCalled();
     });
 
     it('should return dto', async () => {
@@ -146,7 +146,7 @@ describe('CreateTradingProposal', () => {
 
   describe('when unexpected error happen', () => {
     it('should return UnexpectedError', async () => {
-      repo.saveTradingProposal?.mockRejectedValue(new Error('err msg'));
+      repo.saveTradeProposal?.mockRejectedValue(new Error('err msg'));
 
       const response = await useCase.execute(request);
 

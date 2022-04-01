@@ -4,9 +4,9 @@ import {
 } from '~book-trading/entity/books-to-trade';
 import { Trader } from '~book-trading/entity/trader';
 import {
-  TradingProposal,
-  TradingProposalStatus,
-} from '~book-trading/entity/trading-proposal';
+  TradeProposal,
+  TradeProposalStatus,
+} from '~book-trading/entity/trade-proposal';
 import { PaginationProps } from '~shared/repo/pagination';
 
 export type FindBooksToTradeProps = {
@@ -14,9 +14,9 @@ export type FindBooksToTradeProps = {
   status?: BooksToTradeStatus;
 } & PaginationProps;
 
-export type FindTradingPropasalProps = {
+export type FindTradePropasalProps = {
   traderId?: string;
-  status?: TradingProposalStatus;
+  status?: TradeProposalStatus;
 } & PaginationProps;
 
 export interface BookTradingRepo {
@@ -27,10 +27,6 @@ export interface BookTradingRepo {
   findTraderById(traderId: string): Promise<Trader>;
   saveTrader(trader: Trader): Promise<Trader>;
 
-  saveTradingProposal(
-    tradingProposal: TradingProposal,
-  ): Promise<TradingProposal>;
-  findTradingProposal(
-    props?: FindTradingPropasalProps,
-  ): Promise<TradingProposal[]>;
+  saveTradeProposal(tradeProposal: TradeProposal): Promise<TradeProposal>;
+  findTradeProposal(props?: FindTradePropasalProps): Promise<TradeProposal[]>;
 }

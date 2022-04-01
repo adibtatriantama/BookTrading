@@ -2,7 +2,7 @@ import { Test } from '@nestjs/testing';
 import { BooksToTradeDto } from '~book-trading/dto/books-to-trade.dto';
 import { BooksToTrade } from '~book-trading/entity/books-to-trade';
 import { Trader } from '~book-trading/entity/trader';
-import { TradingProposal } from '~book-trading/entity/trading-proposal';
+import { TradeProposal } from '~book-trading/entity/trade-proposal';
 import { Address } from '~book-trading/value-object/address';
 import { Book } from '~book-trading/value-object/book';
 import { BooksTradingMapper } from './book-trading.mapper';
@@ -41,7 +41,7 @@ describe('BooksToTradeMapper', () => {
             'trader',
           ),
           proposals: [
-            TradingProposal.create(
+            TradeProposal.create(
               {
                 books: [
                   Book.create({

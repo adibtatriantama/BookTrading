@@ -1,19 +1,19 @@
 import { Controller, Get, HttpException, Query } from '@nestjs/common';
-import { TradingProposalDto } from '~book-trading/dto/trading-proposal-dto';
+import { TradeProposalDto } from '~book-trading/dto/trade-proposal-dto';
 import { UnexpectedError } from '~shared/core/app.error';
 import {
-  FindTradingProposal,
-  FindTradingProposalRequest,
-} from './find-trading-proposal';
+  FindTradeProposal,
+  FindTradeProposalRequest,
+} from './find-trade-proposal';
 
-@Controller('api/trading-proposal')
-export class FindTradingProposalController {
-  constructor(private readonly useCase: FindTradingProposal) {}
+@Controller('api/trade-proposal')
+export class FindTradeProposalController {
+  constructor(private readonly useCase: FindTradeProposal) {}
 
   @Get()
   async list(
-    @Query() query: FindTradingProposalRequest,
-  ): Promise<TradingProposalDto[]> {
+    @Query() query: FindTradeProposalRequest,
+  ): Promise<TradeProposalDto[]> {
     const response = await this.useCase.execute(query);
 
     if (response.isLeft()) {

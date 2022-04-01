@@ -1,14 +1,14 @@
-import { TradingProposalStatus } from '~book-trading/entity/trading-proposal';
+import { TradeProposalStatus } from '~book-trading/entity/trade-proposal';
 import { IsoDateString } from '~shared/dto/iso-date-string';
 import { BookDto } from './book.dto';
 import { TraderDto } from './trader.dto';
 
-export type TradingProposalDto = {
+export type TradeProposalDto = {
   id: string;
   trader?: TraderDto;
   booksToTradeId: string;
   books: BookDto[];
-  status: TradingProposalStatus;
+  status: TradeProposalStatus;
   createdAt: IsoDateString;
   updatedAt: IsoDateString;
 };

@@ -3,30 +3,30 @@ import { Book } from '~book-trading/value-object/book';
 import { BooksToTrade } from './books-to-trade';
 import { Trader } from './trader';
 
-export type TradingProposalStatus = 'pending' | 'accepted' | 'rejected';
+export type TradeProposalStatus = 'pending' | 'accepted' | 'rejected';
 
-export type TradingProposalProps = {
+export type TradeProposalProps = {
   traderId: string;
   trader?: Trader;
   booksToTradeId: string;
   booksToTrade?: BooksToTrade;
   books: Book[];
-  status?: TradingProposalStatus;
+  status?: TradeProposalStatus;
   createdAt?: Date;
   updatedAt?: Date;
 };
 
-export class TradingProposal {
+export class TradeProposal {
   private _id: string;
-  private _props: TradingProposalProps;
+  private _props: TradeProposalProps;
 
-  private constructor(props: TradingProposalProps, id: string) {
+  private constructor(props: TradeProposalProps, id: string) {
     this._id = id;
     this._props = props;
   }
 
-  static create(props: TradingProposalProps, id?: string): TradingProposal {
-    return new TradingProposal(
+  static create(props: TradeProposalProps, id?: string): TradeProposal {
+    return new TradeProposal(
       {
         ...props,
         status: props.status ? props.status : 'pending',
@@ -61,24 +61,24 @@ export class TradingProposal {
     return this._props.books;
   }
 
-  get status(): TradingProposalStatus {
+  get status(): TradeProposalStatus {
     if (this._props.status) {
       return this._props.status;
     }
-    throw new Error('TradingProposal.status is not set');
+    throw new Error('TradeProposal.status is not set');
   }
 
   get createdAt(): Date {
     if (this._props.createdAt) {
       return this._props.createdAt;
     }
-    throw new Error('TradingProposal.createdAt is not set');
+    throw new Error('TradeProposal.createdAt is not set');
   }
 
   get updatedAt(): Date {
     if (this._props.updatedAt) {
       return this._props.updatedAt;
     }
-    throw new Error('TradingProposal.updatedAt is not set');
+    throw new Error('TradeProposal.updatedAt is not set');
   }
 }

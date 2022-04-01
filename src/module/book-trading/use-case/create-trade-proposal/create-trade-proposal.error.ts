@@ -1,7 +1,7 @@
 import { UnexpectedError } from '~shared/core/app.error';
 import { UseCaseError } from '~shared/core/use-case.error';
 
-export type CreateTradingProposalError =
+export type CreateTradeProposalError =
   | TraderIsNotExistError
   | BooksToTradeIsNotExistError
   | BooksToTradeIsNoLongerAcceptingProposalError

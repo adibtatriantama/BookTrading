@@ -1,3 +1,3 @@
 import { UnexpectedError } from '~shared/core/app.error';
 
-export type FindTradingProposalError = UnexpectedError;
+export type FindTradeProposalError = UnexpectedError;

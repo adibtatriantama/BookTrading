@@ -1,14 +1,14 @@
 import { ObjectId } from 'bson';
 import { Book } from '~book-trading/value-object/book';
 import { Trader } from './trader';
-import { TradingProposal } from './trading-proposal';
+import { TradeProposal } from './trade-proposal';
 
 export type BooksToTradeStatus = 'open' | 'closed' | 'cancelled';
 
 export type BooksToTradeProps = {
   traderId: string;
   trader?: Trader;
-  proposals?: TradingProposal[];
+  proposals?: TradeProposal[];
   books: Book[];
   status?: BooksToTradeStatus;
   createdAt?: Date;
@@ -49,7 +49,7 @@ export class BooksToTrade {
     return this._props.trader;
   }
 
-  get proposals(): TradingProposal[] {
+  get proposals(): TradeProposal[] {
     if (this._props.proposals) {
       return this._props.proposals;
     }

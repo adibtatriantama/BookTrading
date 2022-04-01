@@ -1,36 +1,36 @@
 import { Test } from '@nestjs/testing';
-import { TradingProposalDto } from '~book-trading/dto/trading-proposal-dto';
+import { TradeProposalDto } from '~book-trading/dto/trade-proposal-dto';
 import { UnexpectedError } from '~shared/core/app.error';
 import { right, left } from '~shared/core/either';
 import { MockType } from '~shared/test/mock-type';
-import { FindTradingProposal } from './find-trading-proposal';
-import { FindTradingProposalController } from './find-trading-proposal.controller';
+import { FindTradeProposal } from './find-trade-proposal';
+import { FindTradeProposalController } from './find-trade-proposal.controller';
 
-const useCaseMockFactory: () => MockType<FindTradingProposal> = jest.fn(() => ({
+const useCaseMockFactory: () => MockType<FindTradeProposal> = jest.fn(() => ({
   execute: jest.fn(),
 }));
 
-const dummyResponse: Partial<TradingProposalDto>[] = [{}];
+const dummyResponse: Partial<TradeProposalDto>[] = [{}];
 
-let controller: FindTradingProposalController;
-let useCaseMock: MockType<FindTradingProposal>;
+let controller: FindTradeProposalController;
+let useCaseMock: MockType<FindTradeProposal>;
 
 beforeAll(async () => {
   const module = await Test.createTestingModule({
-    controllers: [FindTradingProposalController],
+    controllers: [FindTradeProposalController],
     providers: [
       {
-        provide: FindTradingProposal,
+        provide: FindTradeProposal,
         useFactory: useCaseMockFactory,
       },
     ],
   }).compile();
 
-  controller = module.get(FindTradingProposalController);
-  useCaseMock = module.get(FindTradingProposal);
+  controller = module.get(FindTradeProposalController);
+  useCaseMock = module.get(FindTradeProposal);
 });
 
-describe('FindTradingProposal', () => {
+describe('FindTradeProposal', () => {
   it('should be defined', () => {
     expect(controller).toBeDefined();
   });
